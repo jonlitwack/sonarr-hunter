@@ -1,0 +1,43 @@
+{
+    "name": "sonarr-hunter",
+    "title": "Sonarr Hunter",
+    "version": "1.0.0",
+    "description": "Automatically searches for missing episodes in your Sonarr library",
+    "host_network": false,
+    "main": "docker-compose.yml",
+    "author": "Your Name",
+    "scheme": "http",
+    "port_map": "",
+    "env": [
+      {
+        "name": "SONARR_API_KEY",
+        "label": "Sonarr API Key",
+        "description": "Your Sonarr API key (found in Settings > General)",
+        "default": "",
+        "required": true
+      },
+      {
+        "name": "SONARR_URL",
+        "label": "Sonarr URL",
+        "description": "URL to your Sonarr instance",
+        "default": "http://sonarr:8989",
+        "required": true
+      },
+      {
+        "name": "SEARCH_INTERVAL",
+        "label": "Search Interval (minutes)",
+        "description": "How often to check for missing episodes",
+        "default": "60",
+        "required": false
+      },
+      {
+        "name": "TZ",
+        "label": "Timezone",
+        "description": "Your timezone (e.g., America/New_York)",
+        "default": "UTC",
+        "required": false
+      }
+    ],
+    "category": "Media",
+    "icon": "https://raw.githubusercontent.com/yourusername/sonarr-hunter/main/icon.png"
+  }

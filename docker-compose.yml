@@ -1,0 +1,15 @@
+services:
+  sonarr-hunter:
+    container_name: sonarr-hunter
+    environment:
+      - SONARR_URL=http://sonarr:8989  # Default value, can be overridden
+      - SONARR_API_KEY=${SONARR_API_KEY}  # User must provide
+      - SEARCH_INTERVAL=60  # Default value, can be overridden
+      - TZ=${TZ}  # User's timezone
+    networks:
+      - casaos
+    restart: unless-stopped
+networks:
+  casaos:
+    external: true
+    name: casaos_network
