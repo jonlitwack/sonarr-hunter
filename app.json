@@ -5,9 +5,9 @@
     "description": "Automatically searches for missing episodes in your Sonarr library",
     "host_network": false,
     "main": "docker-compose.yml",
-    "author": "Your Name",
+    "author": "Jon Litwack",
     "scheme": "http",
-    "port_map": "",
+    "port_map": "3000",
     "env": [
       {
         "name": "SONARR_API_KEY",
@@ -39,5 +39,10 @@
       }
     ],
     "category": "Media",
-    "icon": "https://raw.githubusercontent.com/yourusername/sonarr-hunter/main/icon.png"
-  }
+    "icon": "image_fx_.jpg",
+    "tags": ["automation", "media", "sonarr", "tv shows"],
+    "repository": {
+      "url": "https://github.com/jonlitwack/sonarr-hunter",
+      "type": "git"
+    }
+}

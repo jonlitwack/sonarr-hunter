@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY sonarr_hunter.py .
 COPY entrypoint.sh .
+COPY settings.json .
 
 # Make entrypoint executable
 RUN chmod +x /app/entrypoint.sh
@@ -28,3 +29,5 @@ ENV SONARR_URL=http://sonarr:8989 \
 
 # Entrypoint
 ENTRYPOINT ["/app/entrypoint.sh"]
+
+EXPOSE 3000

@@ -1,15 +1,63 @@
+name: sonarr-hunter
 services:
   sonarr-hunter:
+    image: ghcr.io/jonlitwack/sonarr-hunter:1.0.0
     container_name: sonarr-hunter
     environment:
-      - SONARR_URL=http://sonarr:8989  # Default value, can be overridden
-      - SONARR_API_KEY=${SONARR_API_KEY}  # User must provide
-      - SEARCH_INTERVAL=60  # Default value, can be overridden
-      - TZ=${TZ}  # User's timezone
-    networks:
-      - casaos
+      - SONARR_URL=${SONARR_URL:-http://sonarr:8989}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - SEARCH_INTERVAL=${SEARCH_INTERVAL:-60}
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     restart: unless-stopped
-networks:
-  casaos:
-    external: true
-    name: casaos_network
+    ports:
+      - target: 3000
+        published: ${WEBUI_PORT:-3000}
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/${AppID}/config/settings.json
+        target: /app/settings.json
+
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    main: sonarr-hunter
+    author: Jon Litwack
+    category: Media
+    description:
+        en_us: Automatically searches for missing episodes in your Sonarr library. This app periodically checks your Sonarr instance for any missing episodes and triggers searches for them, helping to ensure your TV show collection stays complete.
+    developer: Jon Litwack
+    icon: https://cdn.jsdelivr.net/gh/jonlitwack/sonarr-hunter@main/icon.png
+    tagline:
+        en_us: Keep your TV show collection complete with automated missing episode searches
+    title:
+        en_us: Sonarr Hunter
+    tips:
+        before_install:
+            en_us: |
+                Before installing, make sure you have:
+                1. A running Sonarr instance
+                2. Your Sonarr API key (found in Settings > General)
+                3. The URL to your Sonarr instance
+    index: /
+    port_map: ${WEBUI_PORT:-3000}
+    envs:
+        - container: SONARR_API_KEY
+          description:
+              en_us: Your Sonarr API key (found in Settings > General)
+        - container: SONARR_URL
+          description:
+              en_us: URL to your Sonarr instance (e.g., http://sonarr:8989)
+        - container: SEARCH_INTERVAL
+          description:
+              en_us: How often to check for missing episodes (in minutes)
+        - container: TZ
+          description:
+              en_us: Your timezone (e.g., America/New_York)
+    volumes:
+        - container: /app/settings.json
+          description:
+              en_us: Configuration file for Sonarr Hunter
